@@ -85,7 +85,10 @@ def predict_fn(input_data, model):
 
     # TODO: Compute the result of applying the model to the input data. The variable `result` should
     #       be a numpy array which contains a single integer which is either 1 or 0
+    prediction = model.forward(data)
 
-    result = None
+    # use "detach()" as said by cloudwatch-logs 
+    # "sagemaker_containers._errors.ClientError: Can't call numpy() on Variable that requires grad. Use var.detach().numpy() i"
+    result = prediction.round().detach().numpy()
 
     return result
